@@ -78,6 +78,7 @@ def movies(request):
         return JsonResponse({'status':"success",'message':"movie record updated successfully","data":data},status=200)
         
     elif request.method=='DELETE':
+        # data = json.loads(request.body) if request.body else {}
         data=request.GET.get("id")
         ref_id=int(data)
         existing_movie=Movie_details.objects.get(id=ref_id)
@@ -85,14 +86,9 @@ def movies(request):
         return JsonResponse({'status':"success",'message':"movie record deleted successfully","data":data},status=200)
 
     elif request.method=='POST':
-        data=json.loads(request.body) #whenever we send data in json fromat
-        # data=request.POST  # whenever we send data in form format
+        # data=json.loads(request.body) #whenever we send data in json fromat
+        data=request.POST  # whenever we send data in form format
         movie=Movie_details.objects.create(movie_name=data.get("movie_name"),release_date=data.get("release_date"),budget=data.get("budget"),rating=data.get("rating"))
         return JsonResponse({'status':"success",'message':"Movie record inserted successfully","data":data},status=200)
     return JsonResponse({'error':"error occured"},status=400)
-
-
-
-
-
 
